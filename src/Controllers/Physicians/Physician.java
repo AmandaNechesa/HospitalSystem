@@ -9,6 +9,7 @@ public interface Physician {
     IdentityHashMap<String, String> currentSession = new IdentityHashMap<>();
     IdentityHashMap<String, InputStream> imageResult = new IdentityHashMap<String, java.io.InputStream>();
     IdentityHashMap<String, String> resultText = new IdentityHashMap<>();
+    IdentityHashMap<String, String> diagnosisText = new IdentityHashMap<>();
     void addPatientDetails();
 
     void viewPatientDetails();

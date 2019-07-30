@@ -50,6 +50,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static Controllers.settings.appName;
@@ -213,7 +214,6 @@ public class PanelController extends Super implements Initializable, Physician {
         title.setText(appName + " Clinic Panel");
         buttonListeners();
         date = datepicker(conditionAddDateDiagnosed);
-//        System.out.println(date);
 //        viewPatientAppointments();
         if (tabClinicAppointments.isSelected()) {
             viewPatientAppointments();
@@ -234,7 +234,6 @@ public class PanelController extends Super implements Initializable, Physician {
         }
         viewPatientDetails();
 
-        System.out.println(email + " is the email");
         try {
             PreparedStatement main = connection.prepareStatement("SELECT * FROM patients WHERE id=?");
             main.setString(1, id);
@@ -282,7 +281,6 @@ public class PanelController extends Super implements Initializable, Physician {
                     appointmentMasterClass.setSize(appointmentMasterClass.getSize() + 1);
                     appointmentMasterClass.setId(resultSet.getString("sessionId"));
                     appointmentMasterClass.setName(resultSet.getString("name"));
-                    System.out.println(resultSet.getString("name"));
                     appointmentMasterClass.setPatientEmail(resultSet.getString("email"));
                     appointmentMasterClassObservableList2.add(appointmentMasterClass);
                 }
@@ -299,10 +297,48 @@ public class PanelController extends Super implements Initializable, Physician {
 
 
     private void buttonListeners() {
+//        diagnosis submitted
+        tabClinicDiagnosisSubmit.setOnAction(event -> {
+            String s = tabClinicDiagnosisInput.getText();
+            try {
+                String results = "";
+                String sql = "SELECT * FROM labtests WHERE patientname=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, currentSession.get("currentSession"));
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    results = rs.getString("results");
+                }
+
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prescriptions(patientemail, diagnosis, doctor, tests) VALUES (?,?,?,?)");
+                preparedStatement.setString(1, currentSession.get("currentSession"));
+                preparedStatement.setString(2, s);
+                preparedStatement.setString(3, user.get("user"));
+                preparedStatement.setString(4, results);
+
+
+                int rowsUpdated = preparedStatement.executeUpdate();
+                if (rowsUpdated > 0) {
+                    tabClinicDiagnosisInput.clear();
+                    showAlert(Alert.AlertType.INFORMATION, panel.getScene().getWindow(), "SUCCESS", "THE OPERATION WAS SUCCESSFULL");
+                    tabcontainerclinicpane.getSelectionModel().select(2);
+
+                } else
+                    showAlert(Alert.AlertType.ERROR, panel.getScene().getWindow(), "ERROR", "THE OPERATION WAS NOT SUCCESSFULL");
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+        });
+
         tablehistoryGetReportButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                view history instance report
+//                view history instance report todo continue from here
+
             }
 
 
@@ -789,6 +825,29 @@ public class PanelController extends Super implements Initializable, Physician {
     }
     @Override
     public void Patientprescription() {
+        String prescribe = tabClinicPrescriptionText.getText();
+        if (prescribe.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to submit an empty prescription?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                prescribe();
+            } else {
+                // ... user chose CANCEL or closed the dialog
+            }
+        }
+    }
+
+    private void prescribe() {
+        String prescribe = tabClinicPrescriptionText.getText();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prescriptions(patientemail, diagnosis, prescription, recommendation, doctor, tests, ratings) VALUES (?,?,?,?,?,?,?)");
+            preparedStatement.setString(1, currentSession.get("currentSession"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
