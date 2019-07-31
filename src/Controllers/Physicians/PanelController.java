@@ -307,12 +307,14 @@ public class PanelController extends Super implements Initializable, Physician {
             String s = tabClinicDiagnosisInput.getText();
             try {
                 String results = "";
+                String id = "";
                 String sql = "SELECT * FROM labtests WHERE patientname=?";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, currentSession.get("currentSession"));
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     results = rs.getString("results");
+                    id = rs.getString("id");
                 }
 
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prescriptions(patientemail, diagnosis, doctor, tests) VALUES (?,?,?,?)");
@@ -324,6 +326,14 @@ public class PanelController extends Super implements Initializable, Physician {
 
                 int rowsUpdated = preparedStatement.executeUpdate();
                 if (rowsUpdated > 0) {
+                    PreparedStatement doneTests = connection.prepareStatement("UPDATE labtests SET done=? WHERE id=?");
+                    doneTests.setBoolean(1, true);
+                    doneTests.setString(2, id);
+                    if (doneTests.executeUpdate() > 0) {
+                        //success!!
+                    } else {
+                        showAlert(Alert.AlertType.WARNING, panel.getScene().getWindow(), "ERROR", "NETWORK ERROR.cHECK CABLE CONNECTION");
+                    }
                     tabClinicDiagnosisInput.clear();
                     showAlert(Alert.AlertType.INFORMATION, panel.getScene().getWindow(), "SUCCESS", "THE OPERATION WAS SUCCESSFULL");
                     tabcontainerclinicpane.getSelectionModel().select(2);
@@ -431,7 +441,35 @@ public class PanelController extends Super implements Initializable, Physician {
             @Override
             public void handle(ActionEvent event) {
                 //end patient session
-                currentSession.clear();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle(null);
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want end the patient session?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent()) {
+                    if (result.get() == ButtonType.OK) {
+                        try {
+                            PreparedStatement preparedStatement = localDbConnection.prepareStatement("DELETE FROM SessionPatients WHERE email=?");
+                            preparedStatement.setString(1, currentSession.get("currentSession"));
+                            if (preparedStatement.executeUpdate() > 0) {
+                                PreparedStatement prepUpd = connection.prepareStatement("UPDATE prescriptions SET completed=? WHERE completed=? AND patientemail=?");
+                                prepUpd.setBoolean(1, true);
+                                prepUpd.setBoolean(2, false);
+                                prepUpd.setString(3, currentSession.get("currentSession"));
+                                if (prepUpd.executeUpdate() > 0) {
+                                    currentSession.clear();
+                                } else {
+                                    showAlert(Alert.AlertType.WARNING, panel.getScene().getWindow(), "ERROR", "ERROR PERFORMING OPERATION");
+                                }
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    // ... user chose CANCEL or closed the dialog
+
+                }
+
             }
         });
         conditionAddButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -827,7 +865,7 @@ public class PanelController extends Super implements Initializable, Physician {
 
         } else {
             returnValue = true;
-            if (!temporarySession.isEmpty())
+            if (temporarySession.isEmpty())
                 temporarySession.put("temporarySession", labTestsMasterClass.getPatientName());
             else
                 temporarySession.replace("temporarySession", labTestsMasterClass.getPatientName());
@@ -886,11 +924,10 @@ public class PanelController extends Super implements Initializable, Physician {
             if (resultSetCheck.isBeforeFirst()) {
                 //the diagnosis exists
                 try {
-                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE prescriptions SET prescription=? ,completed=? WHERE patientemail=? AND completed=?");
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE prescriptions SET prescription=?  WHERE patientemail=? AND completed=?");
                     preparedStatement.setString(1, prescription);
-                    preparedStatement.setBoolean(2, true);
-                    preparedStatement.setString(3, currentSession.get("currentSession"));
-                    preparedStatement.setBoolean(4, false);
+                    preparedStatement.setString(2, currentSession.get("currentSession"));
+                    preparedStatement.setBoolean(3, false);
                     if (preparedStatement.executeUpdate() > 0) {
                         showAlert(Alert.AlertType.INFORMATION, panel.getScene().getWindow(), "SUCCESS", "OPERATION SUCCESSFULL");
                     } else {
