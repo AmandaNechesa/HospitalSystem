@@ -308,9 +308,10 @@ public class PanelController extends Super implements Initializable, Physician {
             try {
                 String results = "";
                 String id = "";
-                String sql = "SELECT * FROM labtests WHERE patientname=?";
+                String sql = "SELECT * FROM labtests WHERE patientname=? AND done=?";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, currentSession.get("currentSession"));
+                ps.setBoolean(2, false);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     results = rs.getString("results");
@@ -698,6 +699,7 @@ public class PanelController extends Super implements Initializable, Physician {
                 tablehistoryTests.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("tests"));
 //                public TableColumn <HistoryMasterClass,String>tablehistoryRatings;
                 tablehistory.refresh();
+                reloadTables();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -708,11 +710,12 @@ public class PanelController extends Super implements Initializable, Physician {
     @Override
     public void viewPatientLabTests() {
 //select teststext where technician is the current logged in user
-        String selectTechnicianTests = "SELECT * FROM labtests WHERE doctorname=?";
+        String selectTechnicianTests = "SELECT * FROM labtests WHERE doctorname=? and done=?";
         PreparedStatement select = null;
         try {
             select = connection.prepareStatement(selectTechnicianTests);
             select.setString(1, user.get("user"));
+            select.setBoolean(2, false);
             ResultSet selectedResults = select.executeQuery();
             if (selectedResults.isBeforeFirst()) {
                 InputStream is = null;
@@ -1027,4 +1030,781 @@ public class PanelController extends Super implements Initializable, Physician {
         viewPatientLabTests();
     }
 
+
+//getters and setters for the class
+
+
+    public TabPane getTabContainer() {
+        return tabContainer;
+    }
+
+    public PanelController setTabContainer(TabPane tabContainer) {
+        this.tabContainer = tabContainer;
+        return this;
+    }
+
+    public Tab getSearchPatientTab() {
+        return searchPatientTab;
+    }
+
+    public PanelController setSearchPatientTab(Tab searchPatientTab) {
+        this.searchPatientTab = searchPatientTab;
+        return this;
+    }
+
+    public Tab getAddpatienthistoryTab() {
+        return addpatienthistoryTab;
+    }
+
+    public PanelController setAddpatienthistoryTab(Tab addpatienthistoryTab) {
+        this.addpatienthistoryTab = addpatienthistoryTab;
+        return this;
+    }
+
+    public AnchorPane getAddPatientHistoryContainer() {
+        return addPatientHistoryContainer;
+    }
+
+    public PanelController setAddPatientHistoryContainer(AnchorPane addPatientHistoryContainer) {
+        this.addPatientHistoryContainer = addPatientHistoryContainer;
+        return this;
+    }
+
+    public Tab getLabtestsTab() {
+        return labtestsTab;
+    }
+
+    public PanelController setLabtestsTab(Tab labtestsTab) {
+        this.labtestsTab = labtestsTab;
+        return this;
+    }
+
+    public AnchorPane getLabtestscontainer() {
+        return labtestscontainer;
+    }
+
+    public PanelController setLabtestscontainer(AnchorPane labtestscontainer) {
+        this.labtestscontainer = labtestscontainer;
+        return this;
+    }
+
+    public AnchorPane getPanel() {
+        return panel;
+    }
+
+    public PanelController setPanel(AnchorPane panel) {
+        this.panel = panel;
+        return this;
+    }
+
+    public Label getClock() {
+        return clock;
+    }
+
+    public PanelController setClock(Label clock) {
+        this.clock = clock;
+        return this;
+    }
+
+    public Label getTitle() {
+        return title;
+    }
+
+    public PanelController setTitle(Label title) {
+        this.title = title;
+        return this;
+    }
+
+    public Button getLogout() {
+        return logout;
+    }
+
+    public PanelController setLogout(Button logout) {
+        this.logout = logout;
+        return this;
+    }
+
+    public TextField getFindinrecords() {
+        return findinrecords;
+    }
+
+    public PanelController setFindinrecords(TextField findinrecords) {
+        this.findinrecords = findinrecords;
+        return this;
+    }
+
+    public Button getFindinrecordsbutton() {
+        return findinrecordsbutton;
+    }
+
+    public PanelController setFindinrecordsbutton(Button findinrecordsbutton) {
+        this.findinrecordsbutton = findinrecordsbutton;
+        return this;
+    }
+
+    public TableView<RecordsMasterClass> getPatienttable() {
+        return patienttable;
+    }
+
+    public PanelController setPatienttable(TableView<RecordsMasterClass> patienttable) {
+        this.patienttable = patienttable;
+        return this;
+    }
+
+    public TableColumn<RecordsMasterClass, String> getColpatientname() {
+        return colpatientname;
+    }
+
+    public PanelController setColpatientname(TableColumn<RecordsMasterClass, String> colpatientname) {
+        this.colpatientname = colpatientname;
+        return this;
+    }
+
+    public TableColumn<RecordsMasterClass, String> getColpatientemail() {
+        return colpatientemail;
+    }
+
+    public PanelController setColpatientemail(TableColumn<RecordsMasterClass, String> colpatientemail) {
+        this.colpatientemail = colpatientemail;
+        return this;
+    }
+
+    public TableColumn<RecordsMasterClass, String> getColpatientnumber() {
+        return colpatientnumber;
+    }
+
+    public PanelController setColpatientnumber(TableColumn<RecordsMasterClass, String> colpatientnumber) {
+        this.colpatientnumber = colpatientnumber;
+        return this;
+    }
+
+    public TabPane getTabcontainerhistorypane() {
+        return tabcontainerhistorypane;
+    }
+
+    public PanelController setTabcontainerhistorypane(TabPane tabcontainerhistorypane) {
+        this.tabcontainerhistorypane = tabcontainerhistorypane;
+        return this;
+    }
+
+    public TabPane getTabcontainerclinicpane() {
+        return tabcontainerclinicpane;
+    }
+
+    public PanelController setTabcontainerclinicpane(TabPane tabcontainerclinicpane) {
+        this.tabcontainerclinicpane = tabcontainerclinicpane;
+        return this;
+    }
+
+    public Tab getAddconditionssubtab() {
+        return addconditionssubtab;
+    }
+
+    public PanelController setAddconditionssubtab(Tab addconditionssubtab) {
+        this.addconditionssubtab = addconditionssubtab;
+        return this;
+    }
+
+    public TextField getConditionAddField() {
+        return conditionAddField;
+    }
+
+    public PanelController setConditionAddField(TextField conditionAddField) {
+        this.conditionAddField = conditionAddField;
+        return this;
+    }
+
+    public TextField getConditionAddCategoryField() {
+        return conditionAddCategoryField;
+    }
+
+    public PanelController setConditionAddCategoryField(TextField conditionAddCategoryField) {
+        this.conditionAddCategoryField = conditionAddCategoryField;
+        return this;
+    }
+
+    public TextArea getConditionAddDescription() {
+        return conditionAddDescription;
+    }
+
+    public PanelController setConditionAddDescription(TextArea conditionAddDescription) {
+        this.conditionAddDescription = conditionAddDescription;
+        return this;
+    }
+
+    public Button getConditionAddButton() {
+        return conditionAddButton;
+    }
+
+    public PanelController setConditionAddButton(Button conditionAddButton) {
+        this.conditionAddButton = conditionAddButton;
+        return this;
+    }
+
+    public DatePicker getConditionAddDateDiagnosed() {
+        return conditionAddDateDiagnosed;
+    }
+
+    public PanelController setConditionAddDateDiagnosed(DatePicker conditionAddDateDiagnosed) {
+        this.conditionAddDateDiagnosed = conditionAddDateDiagnosed;
+        return this;
+    }
+
+    public Tab getViewHistoryTab() {
+        return viewHistoryTab;
+    }
+
+    public PanelController setViewHistoryTab(Tab viewHistoryTab) {
+        this.viewHistoryTab = viewHistoryTab;
+        return this;
+    }
+
+    public TableView<HistoryMasterClass> getTablehistory() {
+        return tablehistory;
+    }
+
+    public PanelController setTablehistory(TableView<HistoryMasterClass> tablehistory) {
+        this.tablehistory = tablehistory;
+        return this;
+    }
+
+    public TableColumn<HistoryMasterClass, String> getTablehistoryId() {
+        return tablehistoryId;
+    }
+
+    public PanelController setTablehistoryId(TableColumn<HistoryMasterClass, String> tablehistoryId) {
+        this.tablehistoryId = tablehistoryId;
+        return this;
+    }
+
+    public TableColumn<HistoryMasterClass, String> getTablehistoryDate() {
+        return tablehistoryDate;
+    }
+
+    public PanelController setTablehistoryDate(TableColumn<HistoryMasterClass, String> tablehistoryDate) {
+        this.tablehistoryDate = tablehistoryDate;
+        return this;
+    }
+
+    public TableColumn<HistoryMasterClass, String> getTablehistoryDoctor() {
+        return tablehistoryDoctor;
+    }
+
+    public PanelController setTablehistoryDoctor(TableColumn<HistoryMasterClass, String> tablehistoryDoctor) {
+        this.tablehistoryDoctor = tablehistoryDoctor;
+        return this;
+    }
+
+    public TableColumn<HistoryMasterClass, String> getTablehistoryPrescription() {
+        return tablehistoryPrescription;
+    }
+
+    public PanelController setTablehistoryPrescription(TableColumn<HistoryMasterClass, String> tablehistoryPrescription) {
+        this.tablehistoryPrescription = tablehistoryPrescription;
+        return this;
+    }
+
+    public TableColumn<HistoryMasterClass, String> getTablehistoryTests() {
+        return tablehistoryTests;
+    }
+
+    public PanelController setTablehistoryTests(TableColumn<HistoryMasterClass, String> tablehistoryTests) {
+        this.tablehistoryTests = tablehistoryTests;
+        return this;
+    }
+
+    public TableColumn<HistoryMasterClass, String> getTablehistoryRatings() {
+        return tablehistoryRatings;
+    }
+
+    public PanelController setTablehistoryRatings(TableColumn<HistoryMasterClass, String> tablehistoryRatings) {
+        this.tablehistoryRatings = tablehistoryRatings;
+        return this;
+    }
+
+    public Button getTablehistoryViewPrescriptionsButton() {
+        return tablehistoryViewPrescriptionsButton;
+    }
+
+    public PanelController setTablehistoryViewPrescriptionsButton(Button tablehistoryViewPrescriptionsButton) {
+        this.tablehistoryViewPrescriptionsButton = tablehistoryViewPrescriptionsButton;
+        return this;
+    }
+
+    public Button getTablehistoryViewLabTestButton() {
+        return tablehistoryViewLabTestButton;
+    }
+
+    public PanelController setTablehistoryViewLabTestButton(Button tablehistoryViewLabTestButton) {
+        this.tablehistoryViewLabTestButton = tablehistoryViewLabTestButton;
+        return this;
+    }
+
+    public Button getTablehistoryViewDiagnosisButton() {
+        return tablehistoryViewDiagnosisButton;
+    }
+
+    public PanelController setTablehistoryViewDiagnosisButton(Button tablehistoryViewDiagnosisButton) {
+        this.tablehistoryViewDiagnosisButton = tablehistoryViewDiagnosisButton;
+        return this;
+    }
+
+    public Button getTablehistoryGetReportButton() {
+        return tablehistoryGetReportButton;
+    }
+
+    public PanelController setTablehistoryGetReportButton(Button tablehistoryGetReportButton) {
+        this.tablehistoryGetReportButton = tablehistoryGetReportButton;
+        return this;
+    }
+
+    public Tab getExistingConditionsTab() {
+        return existingConditionsTab;
+    }
+
+    public PanelController setExistingConditionsTab(Tab existingConditionsTab) {
+        this.existingConditionsTab = existingConditionsTab;
+        return this;
+    }
+
+    public TableView<ConditionsMasterClass> getExistingConditionsTabTable() {
+        return existingConditionsTabTable;
+    }
+
+    public PanelController setExistingConditionsTabTable(TableView<ConditionsMasterClass> existingConditionsTabTable) {
+        this.existingConditionsTabTable = existingConditionsTabTable;
+        return this;
+    }
+
+    public TableColumn<ConditionsMasterClass, String> getExistingConditionsTabTableId() {
+        return existingConditionsTabTableId;
+    }
+
+    public PanelController setExistingConditionsTabTableId(TableColumn<ConditionsMasterClass, String> existingConditionsTabTableId) {
+        this.existingConditionsTabTableId = existingConditionsTabTableId;
+        return this;
+    }
+
+    public TableColumn<ConditionsMasterClass, String> getExistingConditionsTabTableName() {
+        return existingConditionsTabTableName;
+    }
+
+    public PanelController setExistingConditionsTabTableName(TableColumn<ConditionsMasterClass, String> existingConditionsTabTableName) {
+        this.existingConditionsTabTableName = existingConditionsTabTableName;
+        return this;
+    }
+
+    public TableColumn<ConditionsMasterClass, String> getExistingConditionsTabTableDateAdded() {
+        return existingConditionsTabTableDateAdded;
+    }
+
+    public PanelController setExistingConditionsTabTableDateAdded(TableColumn<ConditionsMasterClass, String> existingConditionsTabTableDateAdded) {
+        this.existingConditionsTabTableDateAdded = existingConditionsTabTableDateAdded;
+        return this;
+    }
+
+    public TableColumn<ConditionsMasterClass, String> getExistingConditionsTabTableCategory() {
+        return existingConditionsTabTableCategory;
+    }
+
+    public PanelController setExistingConditionsTabTableCategory(TableColumn<ConditionsMasterClass, String> existingConditionsTabTableCategory) {
+        this.existingConditionsTabTableCategory = existingConditionsTabTableCategory;
+        return this;
+    }
+
+    public TableColumn<ConditionsMasterClass, String> getExistingConditionsTabTableDoctor() {
+        return existingConditionsTabTableDoctor;
+    }
+
+    public PanelController setExistingConditionsTabTableDoctor(TableColumn<ConditionsMasterClass, String> existingConditionsTabTableDoctor) {
+        this.existingConditionsTabTableDoctor = existingConditionsTabTableDoctor;
+        return this;
+    }
+
+    public Button getExistingConditionsTabTableViewDetailsButton() {
+        return existingConditionsTabTableViewDetailsButton;
+    }
+
+    public PanelController setExistingConditionsTabTableViewDetailsButton(Button existingConditionsTabTableViewDetailsButton) {
+        this.existingConditionsTabTableViewDetailsButton = existingConditionsTabTableViewDetailsButton;
+        return this;
+    }
+
+    public Tab getTabClinicAppointments() {
+        return tabClinicAppointments;
+    }
+
+    public PanelController setTabClinicAppointments(Tab tabClinicAppointments) {
+        this.tabClinicAppointments = tabClinicAppointments;
+        return this;
+    }
+
+    public TableView<AppointmentMasterClass> getTabClinicAppointmentsTable() {
+        return tabClinicAppointmentsTable;
+    }
+
+    public PanelController setTabClinicAppointmentsTable(TableView<AppointmentMasterClass> tabClinicAppointmentsTable) {
+        this.tabClinicAppointmentsTable = tabClinicAppointmentsTable;
+        return this;
+    }
+
+    public TableColumn<AppointmentMasterClass, String> getTabClinicAppointmentsTableId() {
+        return tabClinicAppointmentsTableId;
+    }
+
+    public PanelController setTabClinicAppointmentsTableId(TableColumn<AppointmentMasterClass, String> tabClinicAppointmentsTableId) {
+        this.tabClinicAppointmentsTableId = tabClinicAppointmentsTableId;
+        return this;
+    }
+
+    public TableColumn<AppointmentMasterClass, String> getTabClinicAppointmentsTableTypeOfVisit() {
+        return tabClinicAppointmentsTableTypeOfVisit;
+    }
+
+    public PanelController setTabClinicAppointmentsTableTypeOfVisit(TableColumn<AppointmentMasterClass, String> tabClinicAppointmentsTableTypeOfVisit) {
+        this.tabClinicAppointmentsTableTypeOfVisit = tabClinicAppointmentsTableTypeOfVisit;
+        return this;
+    }
+
+    public TableColumn<AppointmentMasterClass, String> getTabClinicAppointmentsTableTimeOfAppointment() {
+        return tabClinicAppointmentsTableTimeOfAppointment;
+    }
+
+    public PanelController setTabClinicAppointmentsTableTimeOfAppointment(TableColumn<AppointmentMasterClass, String> tabClinicAppointmentsTableTimeOfAppointment) {
+        this.tabClinicAppointmentsTableTimeOfAppointment = tabClinicAppointmentsTableTimeOfAppointment;
+        return this;
+    }
+
+    public Button getTabClinicAppointmentsTableCallInButton() {
+        return tabClinicAppointmentsTableCallInButton;
+    }
+
+    public PanelController setTabClinicAppointmentsTableCallInButton(Button tabClinicAppointmentsTableCallInButton) {
+        this.tabClinicAppointmentsTableCallInButton = tabClinicAppointmentsTableCallInButton;
+        return this;
+    }
+
+    public Tab getTabClinicLabTests() {
+        return tabClinicLabTests;
+    }
+
+    public PanelController setTabClinicLabTests(Tab tabClinicLabTests) {
+        this.tabClinicLabTests = tabClinicLabTests;
+        return this;
+    }
+
+    public TableView<LabTestsMasterClass> getTabClinicLabTestsTable() {
+        return tabClinicLabTestsTable;
+    }
+
+    public PanelController setTabClinicLabTestsTable(TableView<LabTestsMasterClass> tabClinicLabTestsTable) {
+        this.tabClinicLabTestsTable = tabClinicLabTestsTable;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getTabClinicLabTestsTableId() {
+        return tabClinicLabTestsTableId;
+    }
+
+    public PanelController setTabClinicLabTestsTableId(TableColumn<LabTestsMasterClass, String> tabClinicLabTestsTableId) {
+        this.tabClinicLabTestsTableId = tabClinicLabTestsTableId;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getTabClinicLabTestsTableTestType() {
+        return tabClinicLabTestsTableTestType;
+    }
+
+    public PanelController setTabClinicLabTestsTableTestType(TableColumn<LabTestsMasterClass, String> tabClinicLabTestsTableTestType) {
+        this.tabClinicLabTestsTableTestType = tabClinicLabTestsTableTestType;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getTabClinicLabTestsTableTechnician() {
+        return tabClinicLabTestsTableTechnician;
+    }
+
+    public PanelController setTabClinicLabTestsTableTechnician(TableColumn<LabTestsMasterClass, String> tabClinicLabTestsTableTechnician) {
+        this.tabClinicLabTestsTableTechnician = tabClinicLabTestsTableTechnician;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getTabClinicLabTestsTablePatientName() {
+        return tabClinicLabTestsTablePatientName;
+    }
+
+    public PanelController setTabClinicLabTestsTablePatientName(TableColumn<LabTestsMasterClass, String> tabClinicLabTestsTablePatientName) {
+        this.tabClinicLabTestsTablePatientName = tabClinicLabTestsTablePatientName;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getTabClinicLabTestsTableStatus() {
+        return tabClinicLabTestsTableStatus;
+    }
+
+    public PanelController setTabClinicLabTestsTableStatus(TableColumn<LabTestsMasterClass, String> tabClinicLabTestsTableStatus) {
+        this.tabClinicLabTestsTableStatus = tabClinicLabTestsTableStatus;
+        return this;
+    }
+
+    public Button getTabClinicLabTestsTableGetFullReportButton() {
+        return tabClinicLabTestsTableGetFullReportButton;
+    }
+
+    public PanelController setTabClinicLabTestsTableGetFullReportButton(Button tabClinicLabTestsTableGetFullReportButton) {
+        this.tabClinicLabTestsTableGetFullReportButton = tabClinicLabTestsTableGetFullReportButton;
+        return this;
+    }
+
+    public Button getTabClinicLabTestsTablemoveReportToDiagnosis() {
+        return tabClinicLabTestsTablemoveReportToDiagnosis;
+    }
+
+    public PanelController setTabClinicLabTestsTablemoveReportToDiagnosis(Button tabClinicLabTestsTablemoveReportToDiagnosis) {
+        this.tabClinicLabTestsTablemoveReportToDiagnosis = tabClinicLabTestsTablemoveReportToDiagnosis;
+        return this;
+    }
+
+    public Tab getTabClinicDiagnosis() {
+        return tabClinicDiagnosis;
+    }
+
+    public PanelController setTabClinicDiagnosis(Tab tabClinicDiagnosis) {
+        this.tabClinicDiagnosis = tabClinicDiagnosis;
+        return this;
+    }
+
+    public TextArea getTabClinicDiagnosisInput() {
+        return tabClinicDiagnosisInput;
+    }
+
+    public PanelController setTabClinicDiagnosisInput(TextArea tabClinicDiagnosisInput) {
+        this.tabClinicDiagnosisInput = tabClinicDiagnosisInput;
+        return this;
+    }
+
+    public Button getTabClinicDiagnosisSubmit() {
+        return tabClinicDiagnosisSubmit;
+    }
+
+    public PanelController setTabClinicDiagnosisSubmit(Button tabClinicDiagnosisSubmit) {
+        this.tabClinicDiagnosisSubmit = tabClinicDiagnosisSubmit;
+        return this;
+    }
+
+    public Tab getTabClinicPrescription() {
+        return tabClinicPrescription;
+    }
+
+    public PanelController setTabClinicPrescription(Tab tabClinicPrescription) {
+        this.tabClinicPrescription = tabClinicPrescription;
+        return this;
+    }
+
+    public Button getTabClinicPrescriptionSubmit() {
+        return tabClinicPrescriptionSubmit;
+    }
+
+    public PanelController setTabClinicPrescriptionSubmit(Button tabClinicPrescriptionSubmit) {
+        this.tabClinicPrescriptionSubmit = tabClinicPrescriptionSubmit;
+        return this;
+    }
+
+    public TextArea getTabClinicPrescriptionText() {
+        return tabClinicPrescriptionText;
+    }
+
+    public PanelController setTabClinicPrescriptionText(TextArea tabClinicPrescriptionText) {
+        this.tabClinicPrescriptionText = tabClinicPrescriptionText;
+        return this;
+    }
+
+    public Button getEndPatientSession() {
+        return endPatientSession;
+    }
+
+    public PanelController setEndPatientSession(Button endPatientSession) {
+        this.endPatientSession = endPatientSession;
+        return this;
+    }
+
+    public TabPane getAppointmentssearch() {
+        return appointmentssearch;
+    }
+
+    public PanelController setAppointmentssearch(TabPane appointmentssearch) {
+        this.appointmentssearch = appointmentssearch;
+        return this;
+    }
+
+    public TableView<AppointmentMasterClass> getTabClinicSessionsTable() {
+        return tabClinicSessionsTable;
+    }
+
+    public PanelController setTabClinicSessionsTable(TableView<AppointmentMasterClass> tabClinicSessionsTable) {
+        this.tabClinicSessionsTable = tabClinicSessionsTable;
+        return this;
+    }
+
+    public TableColumn<AppointmentMasterClass, String> getTabClinicSessionsTableId() {
+        return tabClinicSessionsTableId;
+    }
+
+    public PanelController setTabClinicSessionsTableId(TableColumn<AppointmentMasterClass, String> tabClinicSessionsTableId) {
+        this.tabClinicSessionsTableId = tabClinicSessionsTableId;
+        return this;
+    }
+
+    public TableColumn<AppointmentMasterClass, String> getTabClinicSessionsTablePatientEmail() {
+        return tabClinicSessionsTablePatientEmail;
+    }
+
+    public PanelController setTabClinicSessionsTablePatientEmail(TableColumn<AppointmentMasterClass, String> tabClinicSessionsTablePatientEmail) {
+        this.tabClinicSessionsTablePatientEmail = tabClinicSessionsTablePatientEmail;
+        return this;
+    }
+
+    public TableColumn<AppointmentMasterClass, String> getTabClinicSessionsTableName() {
+        return tabClinicSessionsTableName;
+    }
+
+    public PanelController setTabClinicSessionsTableName(TableColumn<AppointmentMasterClass, String> tabClinicSessionsTableName) {
+        this.tabClinicSessionsTableName = tabClinicSessionsTableName;
+        return this;
+    }
+
+    public Button getTabClinicSessionsTableResumeInButton() {
+        return tabClinicSessionsTableResumeInButton;
+    }
+
+    public PanelController setTabClinicSessionsTableResumeInButton(Button tabClinicSessionsTableResumeInButton) {
+        this.tabClinicSessionsTableResumeInButton = tabClinicSessionsTableResumeInButton;
+        return this;
+    }
+
+    public Tab getSessionsTab() {
+        return sessionsTab;
+    }
+
+    public PanelController setSessionsTab(Tab sessionsTab) {
+        this.sessionsTab = sessionsTab;
+        return this;
+    }
+
+    public Button getStartSessionButton() {
+        return startSessionButton;
+    }
+
+    public PanelController setStartSessionButton(Button startSessionButton) {
+        this.startSessionButton = startSessionButton;
+        return this;
+    }
+
+    public TabPane getLabteststabpane() {
+        return labteststabpane;
+    }
+
+    public PanelController setLabteststabpane(TabPane labteststabpane) {
+        this.labteststabpane = labteststabpane;
+        return this;
+    }
+
+    public TextArea getTestsInputPhysician() {
+        return testsInputPhysician;
+    }
+
+    public PanelController setTestsInputPhysician(TextArea testsInputPhysician) {
+        this.testsInputPhysician = testsInputPhysician;
+        return this;
+    }
+
+    public Button getTestsSendToLab() {
+        return testsSendToLab;
+    }
+
+    public PanelController setTestsSendToLab(Button testsSendToLab) {
+        this.testsSendToLab = testsSendToLab;
+        return this;
+    }
+
+    public ImageView getResultPreview() {
+        return resultPreview;
+    }
+
+    public PanelController setResultPreview(ImageView resultPreview) {
+        this.resultPreview = resultPreview;
+        return this;
+    }
+
+    public ObservableList<RecordsMasterClass> getRecordsMasterClassObservableList() {
+        return recordsMasterClassObservableList;
+    }
+
+    public PanelController setRecordsMasterClassObservableList(ObservableList<RecordsMasterClass> recordsMasterClassObservableList) {
+        this.recordsMasterClassObservableList = recordsMasterClassObservableList;
+        return this;
+    }
+
+    public ObservableList<HistoryMasterClass> getHistoryMasterClassObservableList() {
+        return historyMasterClassObservableList;
+    }
+
+    public PanelController setHistoryMasterClassObservableList(ObservableList<HistoryMasterClass> historyMasterClassObservableList) {
+        this.historyMasterClassObservableList = historyMasterClassObservableList;
+        return this;
+    }
+
+    public ObservableList<ConditionsMasterClass> getConditionsMasterClassObservableList() {
+        return conditionsMasterClassObservableList;
+    }
+
+    public PanelController setConditionsMasterClassObservableList(ObservableList<ConditionsMasterClass> conditionsMasterClassObservableList) {
+        this.conditionsMasterClassObservableList = conditionsMasterClassObservableList;
+        return this;
+    }
+
+    public ObservableList<AppointmentMasterClass> getAppointmentMasterClassObservableList() {
+        return appointmentMasterClassObservableList;
+    }
+
+    public PanelController setAppointmentMasterClassObservableList(ObservableList<AppointmentMasterClass> appointmentMasterClassObservableList) {
+        this.appointmentMasterClassObservableList = appointmentMasterClassObservableList;
+        return this;
+    }
+
+    public ObservableList<AppointmentMasterClass> getAppointmentMasterClassObservableList2() {
+        return appointmentMasterClassObservableList2;
+    }
+
+    public PanelController setAppointmentMasterClassObservableList2(ObservableList<AppointmentMasterClass> appointmentMasterClassObservableList2) {
+        this.appointmentMasterClassObservableList2 = appointmentMasterClassObservableList2;
+        return this;
+    }
+
+    public ObservableList<LabTestsMasterClass> getLabTestsMasterClassObservableList() {
+        return labTestsMasterClassObservableList;
+    }
+
+    public PanelController setLabTestsMasterClassObservableList(ObservableList<LabTestsMasterClass> labTestsMasterClassObservableList) {
+        this.labTestsMasterClassObservableList = labTestsMasterClassObservableList;
+        return this;
+    }
+
+    public ArrayList<TabPane> getTabPaneArrayList() {
+        return tabPaneArrayList;
+    }
+
+    public PanelController setTabPaneArrayList(ArrayList<TabPane> tabPaneArrayList) {
+        this.tabPaneArrayList = tabPaneArrayList;
+        return this;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public PanelController setDate(String date) {
+        this.date = date;
+        return this;
+    }
 }

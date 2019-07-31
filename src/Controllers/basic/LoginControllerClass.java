@@ -257,4 +257,105 @@ public class LoginControllerClass extends Super implements Initializable {
     }
 
 
+//    getters and setters for the class variables
+
+
+    public AnchorPane getPanel() {
+        return panel;
+    }
+
+    public LoginControllerClass setPanel(AnchorPane panel) {
+        this.panel = panel;
+        return this;
+    }
+
+    public TextField getName() {
+        return name;
+    }
+
+    public LoginControllerClass setName(TextField name) {
+        this.name = name;
+        return this;
+    }
+
+    public PasswordField getPassword() {
+        return password;
+    }
+
+    public LoginControllerClass setPassword(PasswordField password) {
+        this.password = password;
+        return this;
+    }
+
+    public Button getLogin() {
+        return login;
+    }
+
+    public LoginControllerClass setLogin(Button login) {
+        this.login = login;
+        return this;
+    }
+
+    public Button getHelp() {
+        return help;
+    }
+
+    public LoginControllerClass setHelp(Button help) {
+        this.help = help;
+        return this;
+    }
+
+    public Label getMessage() {
+        return message;
+    }
+
+    public LoginControllerClass setMessage(Label message) {
+        this.message = message;
+        return this;
+    }
+
+    public Label getTitle() {
+        return title;
+    }
+
+    public LoginControllerClass setTitle(Label title) {
+        this.title = title;
+        return this;
+    }
+
+    public ImageView getLogo1() {
+        return logo1;
+    }
+
+    public LoginControllerClass setLogo1(ImageView logo1) {
+        this.logo1 = logo1;
+        return this;
+    }
+
+    public ImageView getLogo2() {
+        return logo2;
+    }
+
+    public LoginControllerClass setLogo2(ImageView logo2) {
+        this.logo2 = logo2;
+        return this;
+    }
+
+    public ImageView getLogo3() {
+        return logo3;
+    }
+
+    public LoginControllerClass setLogo3(ImageView logo3) {
+        this.logo3 = logo3;
+        return this;
+    }
+
+    public ToastController getToastController() {
+        return toastController;
+    }
+
+    public LoginControllerClass setToastController(ToastController toastController) {
+        this.toastController = toastController;
+        return this;
+    }
 }

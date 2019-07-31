@@ -205,4 +205,48 @@ public class Main extends Application {
     public interface InitCompletionHandler {
         void complete();
     }
+
+    public static int getSplashWidth() {
+        return SPLASH_WIDTH;
+    }
+
+    public static int getSplashHeight() {
+        return SPLASH_HEIGHT;
+    }
+
+    public Pane getSplashLayout() {
+        return splashLayout;
+    }
+
+    public Main setSplashLayout(Pane splashLayout) {
+        this.splashLayout = splashLayout;
+        return this;
+    }
+
+    public ProgressBar getLoadProgress() {
+        return loadProgress;
+    }
+
+    public Main setLoadProgress(ProgressBar loadProgress) {
+        this.loadProgress = loadProgress;
+        return this;
+    }
+
+    public Label getProgressText() {
+        return progressText;
+    }
+
+    public Main setProgressText(Label progressText) {
+        this.progressText = progressText;
+        return this;
+    }
+
+    public Stage getMainStage() {
+        return mainStage;
+    }
+
+    public Main setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
+        return this;
+    }
 }

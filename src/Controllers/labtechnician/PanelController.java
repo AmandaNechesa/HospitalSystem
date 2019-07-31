@@ -439,4 +439,311 @@ public class PanelController extends Super implements Initializable, LabSettings
             e.printStackTrace();
         }
     }
+//    getters and setters for the class variables
+
+    public AnchorPane getPanel() {
+        return panel;
+    }
+
+    public PanelController setPanel(AnchorPane panel) {
+        this.panel = panel;
+        return this;
+    }
+
+    public TabPane getTabContainer() {
+        return tabContainer;
+    }
+
+    public PanelController setTabContainer(TabPane tabContainer) {
+        this.tabContainer = tabContainer;
+        return this;
+    }
+
+    public Tab getPendingteststab() {
+        return pendingteststab;
+    }
+
+    public PanelController setPendingteststab(Tab pendingteststab) {
+        this.pendingteststab = pendingteststab;
+        return this;
+    }
+
+    public TableView<LabTestsMasterClass> getPendingTestsTable() {
+        return pendingTestsTable;
+    }
+
+    public PanelController setPendingTestsTable(TableView<LabTestsMasterClass> pendingTestsTable) {
+        this.pendingTestsTable = pendingTestsTable;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getPendingTestsTableid() {
+        return pendingTestsTableid;
+    }
+
+    public PanelController setPendingTestsTableid(TableColumn<LabTestsMasterClass, String> pendingTestsTableid) {
+        this.pendingTestsTableid = pendingTestsTableid;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getPendingTestsTabledoctor() {
+        return pendingTestsTabledoctor;
+    }
+
+    public PanelController setPendingTestsTabledoctor(TableColumn<LabTestsMasterClass, String> pendingTestsTabledoctor) {
+        this.pendingTestsTabledoctor = pendingTestsTabledoctor;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getPendingTestsTablepatientname() {
+        return pendingTestsTablepatientname;
+    }
+
+    public PanelController setPendingTestsTablepatientname(TableColumn<LabTestsMasterClass, String> pendingTestsTablepatientname) {
+        this.pendingTestsTablepatientname = pendingTestsTablepatientname;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getPendingTestsTableTests() {
+        return pendingTestsTableTests;
+    }
+
+    public PanelController setPendingTestsTableTests(TableColumn<LabTestsMasterClass, String> pendingTestsTableTests) {
+        this.pendingTestsTableTests = pendingTestsTableTests;
+        return this;
+    }
+
+    public TableColumn<LabTestsMasterClass, String> getPendingTestsTableStatus() {
+        return pendingTestsTableStatus;
+    }
+
+    public PanelController setPendingTestsTableStatus(TableColumn<LabTestsMasterClass, String> pendingTestsTableStatus) {
+        this.pendingTestsTableStatus = pendingTestsTableStatus;
+        return this;
+    }
+
+    public Button getImageres() {
+        return imageres;
+    }
+
+    public PanelController setImageres(Button imageres) {
+        this.imageres = imageres;
+        return this;
+    }
+
+    public Button getPendingTestsTablestartTest() {
+        return pendingTestsTablestartTest;
+    }
+
+    public PanelController setPendingTestsTablestartTest(Button pendingTestsTablestartTest) {
+        this.pendingTestsTablestartTest = pendingTestsTablestartTest;
+        return this;
+    }
+
+    public Button getPendingTestsTableviewdetails() {
+        return pendingTestsTableviewdetails;
+    }
+
+    public PanelController setPendingTestsTableviewdetails(Button pendingTestsTableviewdetails) {
+        this.pendingTestsTableviewdetails = pendingTestsTableviewdetails;
+        return this;
+    }
+
+    public Tab getLabtestresultstab() {
+        return labtestresultstab;
+    }
+
+    public PanelController setLabtestresultstab(Tab labtestresultstab) {
+        this.labtestresultstab = labtestresultstab;
+        return this;
+    }
+
+    public AnchorPane getLabtestsresultscontainer() {
+        return labtestsresultscontainer;
+    }
+
+    public PanelController setLabtestsresultscontainer(AnchorPane labtestsresultscontainer) {
+        this.labtestsresultscontainer = labtestsresultscontainer;
+        return this;
+    }
+
+    public TextArea getTestresults() {
+        return testresults;
+    }
+
+    public PanelController setTestresults(TextArea testresults) {
+        this.testresults = testresults;
+        return this;
+    }
+
+    public Button getSubmitImageResult() {
+        return submitImageResult;
+    }
+
+    public PanelController setSubmitImageResult(Button submitImageResult) {
+        this.submitImageResult = submitImageResult;
+        return this;
+    }
+
+    public Button getSubmitTypedResult() {
+        return submitTypedResult;
+    }
+
+    public PanelController setSubmitTypedResult(Button submitTypedResult) {
+        this.submitTypedResult = submitTypedResult;
+        return this;
+    }
+
+    public Tab getSessionsTab() {
+        return sessionsTab;
+    }
+
+    public PanelController setSessionsTab(Tab sessionsTab) {
+        this.sessionsTab = sessionsTab;
+        return this;
+    }
+
+    public TableView<SessionMasterClass> getTablabSessionsTable() {
+        return tablabSessionsTable;
+    }
+
+    public PanelController setTablabSessionsTable(TableView<SessionMasterClass> tablabSessionsTable) {
+        this.tablabSessionsTable = tablabSessionsTable;
+        return this;
+    }
+
+    public TableColumn<SessionMasterClass, String> getTablabSessionsTableid() {
+        return tablabSessionsTableid;
+    }
+
+    public PanelController setTablabSessionsTableid(TableColumn<SessionMasterClass, String> tablabSessionsTableid) {
+        this.tablabSessionsTableid = tablabSessionsTableid;
+        return this;
+    }
+
+    public TableColumn<SessionMasterClass, String> getTablabSessionsTablepatient() {
+        return tablabSessionsTablepatient;
+    }
+
+    public PanelController setTablabSessionsTablepatient(TableColumn<SessionMasterClass, String> tablabSessionsTablepatient) {
+        this.tablabSessionsTablepatient = tablabSessionsTablepatient;
+        return this;
+    }
+
+    public TableColumn<SessionMasterClass, String> getTablabSessionsTabledoctor() {
+        return tablabSessionsTabledoctor;
+    }
+
+    public PanelController setTablabSessionsTabledoctor(TableColumn<SessionMasterClass, String> tablabSessionsTabledoctor) {
+        this.tablabSessionsTabledoctor = tablabSessionsTabledoctor;
+        return this;
+    }
+
+    public Button getTablabSessionsTableresume() {
+        return tablabSessionsTableresume;
+    }
+
+    public PanelController setTablabSessionsTableresume(Button tablabSessionsTableresume) {
+        this.tablabSessionsTableresume = tablabSessionsTableresume;
+        return this;
+    }
+
+    public Label getClock() {
+        return clock;
+    }
+
+    public PanelController setClock(Label clock) {
+        this.clock = clock;
+        return this;
+    }
+
+    public Button getLogout() {
+        return logout;
+    }
+
+    public PanelController setLogout(Button logout) {
+        this.logout = logout;
+        return this;
+    }
+
+    public Label getTitle() {
+        return title;
+    }
+
+    public PanelController setTitle(Label title) {
+        this.title = title;
+        return this;
+    }
+
+    public Label getSession() {
+        return session;
+    }
+
+    public PanelController setSession(Label session) {
+        this.session = session;
+        return this;
+    }
+
+    public ImageView getPreviewImage() {
+        return previewImage;
+    }
+
+    public PanelController setPreviewImage(ImageView previewImage) {
+        this.previewImage = previewImage;
+        return this;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public PanelController setFile(File file) {
+        this.file = file;
+        return this;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public PanelController setLength(int length) {
+        this.length = length;
+        return this;
+    }
+
+    public BufferedImage getBufferedImage() {
+        return bufferedImage;
+    }
+
+    public PanelController setBufferedImage(BufferedImage bufferedImage) {
+        this.bufferedImage = bufferedImage;
+        return this;
+    }
+
+    public IdentityHashMap<String, String> getCurrentSession() {
+        return currentSession;
+    }
+
+    public PanelController setCurrentSession(IdentityHashMap<String, String> currentSession) {
+        this.currentSession = currentSession;
+        return this;
+    }
+
+    public ObservableList<LabTestsMasterClass> getLabTestsMasterClassObservableList() {
+        return labTestsMasterClassObservableList;
+    }
+
+    public PanelController setLabTestsMasterClassObservableList(ObservableList<LabTestsMasterClass> labTestsMasterClassObservableList) {
+        this.labTestsMasterClassObservableList = labTestsMasterClassObservableList;
+        return this;
+    }
+
+    public ObservableList<SessionMasterClass> getSessionMasterClassObservableList() {
+        return sessionMasterClassObservableList;
+    }
+
+    public PanelController setSessionMasterClassObservableList(ObservableList<SessionMasterClass> sessionMasterClassObservableList) {
+        this.sessionMasterClassObservableList = sessionMasterClassObservableList;
+        return this;
+    }
 }

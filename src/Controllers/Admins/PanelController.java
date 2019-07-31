@@ -408,4 +408,347 @@ public class PanelController extends Super implements Initializable {
 
     }
 
+//getters and setters for the class variables
+
+    public WebView getWebview() {
+        return webview;
+    }
+
+    public PanelController setWebview(WebView webview) {
+        this.webview = webview;
+        return this;
+    }
+
+    public Button getAdduser() {
+        return adduser;
+    }
+
+    public PanelController setAdduser(Button adduser) {
+        this.adduser = adduser;
+        return this;
+    }
+
+    public TextArea getUserdescription() {
+        return userdescription;
+    }
+
+    public PanelController setUserdescription(TextArea userdescription) {
+        this.userdescription = userdescription;
+        return this;
+    }
+
+    public TextField getUseridentifier() {
+        return useridentifier;
+    }
+
+    public PanelController setUseridentifier(TextField useridentifier) {
+        this.useridentifier = useridentifier;
+        return this;
+    }
+
+    public TextField getUseremail() {
+        return useremail;
+    }
+
+    public PanelController setUseremail(TextField useremail) {
+        this.useremail = useremail;
+        return this;
+    }
+
+    public TextField getUsername() {
+        return username;
+    }
+
+    public PanelController setUsername(TextField username) {
+        this.username = username;
+        return this;
+    }
+
+    public AnchorPane getPanel() {
+        return panel;
+    }
+
+    public PanelController setPanel(AnchorPane panel) {
+        this.panel = panel;
+        return this;
+    }
+
+    public ChoiceBox getRole() {
+        return role;
+    }
+
+    public PanelController setRole(ChoiceBox role) {
+        this.role = role;
+        return this;
+    }
+
+    public TextField getLocation() {
+        return location;
+    }
+
+    public PanelController setLocation(TextField location) {
+        this.location = location;
+        return this;
+    }
+
+    public Button getLogout() {
+        return logout;
+    }
+
+    public PanelController setLogout(Button logout) {
+        this.logout = logout;
+        return this;
+    }
+
+    public Button getAddcertfile() {
+        return addcertfile;
+    }
+
+    public PanelController setAddcertfile(Button addcertfile) {
+        this.addcertfile = addcertfile;
+        return this;
+    }
+
+    public Tab getRegstaff() {
+        return regstaff;
+    }
+
+    public PanelController setRegstaff(Tab regstaff) {
+        this.regstaff = regstaff;
+        return this;
+    }
+
+    public Tab getPatientinfo() {
+        return patientinfo;
+    }
+
+    public PanelController setPatientinfo(Tab patientinfo) {
+        this.patientinfo = patientinfo;
+        return this;
+    }
+
+    public Tab getStaffinfo() {
+        return staffinfo;
+    }
+
+    public PanelController setStaffinfo(Tab staffinfo) {
+        this.staffinfo = staffinfo;
+        return this;
+    }
+
+    public Tab getNews() {
+        return news;
+    }
+
+    public PanelController setNews(Tab news) {
+        this.news = news;
+        return this;
+    }
+
+    public TextField getSearchPatientID() {
+        return searchPatientID;
+    }
+
+    public PanelController setSearchPatientID(TextField searchPatientID) {
+        this.searchPatientID = searchPatientID;
+        return this;
+    }
+
+    public Button getSearchpatientbutton() {
+        return searchpatientbutton;
+    }
+
+    public PanelController setSearchpatientbutton(Button searchpatientbutton) {
+        this.searchpatientbutton = searchpatientbutton;
+        return this;
+    }
+
+    public Label getClock() {
+        return clock;
+    }
+
+    public PanelController setClock(Label clock) {
+        this.clock = clock;
+        return this;
+    }
+
+    public TabPane getTabpane() {
+        return tabpane;
+    }
+
+    public PanelController setTabpane(TabPane tabpane) {
+        this.tabpane = tabpane;
+        return this;
+    }
+
+    public Label getTitle() {
+        return title;
+    }
+
+    public PanelController setTitle(Label title) {
+        this.title = title;
+        return this;
+    }
+
+    public TableView<StaffMasterClass> getViewStaff() {
+        return viewStaff;
+    }
+
+    public PanelController setViewStaff(TableView<StaffMasterClass> viewStaff) {
+        this.viewStaff = viewStaff;
+        return this;
+    }
+
+    public TableColumn<StaffMasterClass, String> getViewStaffId() {
+        return viewStaffId;
+    }
+
+    public PanelController setViewStaffId(TableColumn<StaffMasterClass, String> viewStaffId) {
+        this.viewStaffId = viewStaffId;
+        return this;
+    }
+
+    public TableColumn<StaffMasterClass, String> getViewStaffName() {
+        return viewStaffName;
+    }
+
+    public PanelController setViewStaffName(TableColumn<StaffMasterClass, String> viewStaffName) {
+        this.viewStaffName = viewStaffName;
+        return this;
+    }
+
+    public TableColumn<StaffMasterClass, String> getViewStaffEmail() {
+        return viewStaffEmail;
+    }
+
+    public PanelController setViewStaffEmail(TableColumn<StaffMasterClass, String> viewStaffEmail) {
+        this.viewStaffEmail = viewStaffEmail;
+        return this;
+    }
+
+    public TableColumn<StaffMasterClass, String> getViewStaffIdentity() {
+        return viewStaffIdentity;
+    }
+
+    public PanelController setViewStaffIdentity(TableColumn<StaffMasterClass, String> viewStaffIdentity) {
+        this.viewStaffIdentity = viewStaffIdentity;
+        return this;
+    }
+
+    public TableColumn<StaffMasterClass, String> getViewStaffBranch() {
+        return viewStaffBranch;
+    }
+
+    public PanelController setViewStaffBranch(TableColumn<StaffMasterClass, String> viewStaffBranch) {
+        this.viewStaffBranch = viewStaffBranch;
+        return this;
+    }
+
+    public TableColumn<StaffMasterClass, String> getViewStaffStatus() {
+        return viewStaffStatus;
+    }
+
+    public PanelController setViewStaffStatus(TableColumn<StaffMasterClass, String> viewStaffStatus) {
+        this.viewStaffStatus = viewStaffStatus;
+        return this;
+    }
+
+    public Button getFire() {
+        return fire;
+    }
+
+    public PanelController setFire(Button fire) {
+        this.fire = fire;
+        return this;
+    }
+
+    public Button getSuspend() {
+        return suspend;
+    }
+
+    public PanelController setSuspend(Button suspend) {
+        this.suspend = suspend;
+        return this;
+    }
+
+    public Button getMaternity() {
+        return maternity;
+    }
+
+    public PanelController setMaternity(Button maternity) {
+        this.maternity = maternity;
+        return this;
+    }
+
+    public Button getLeave() {
+        return leave;
+    }
+
+    public PanelController setLeave(Button leave) {
+        this.leave = leave;
+        return this;
+    }
+
+    public Button getShortBreak() {
+        return shortBreak;
+    }
+
+    public PanelController setShortBreak(Button shortBreak) {
+        this.shortBreak = shortBreak;
+        return this;
+    }
+
+    public double getTabWidth() {
+        return tabWidth;
+    }
+
+    public PanelController setTabWidth(double tabWidth) {
+        this.tabWidth = tabWidth;
+        return this;
+    }
+
+    public ArrayList<TabPane> getTabPaneArrayList() {
+        return tabPaneArrayList;
+    }
+
+    public PanelController setTabPaneArrayList(ArrayList<TabPane> tabPaneArrayList) {
+        this.tabPaneArrayList = tabPaneArrayList;
+        return this;
+    }
+
+    public ObservableList<StaffMasterClass> getStaffMasterClassObservableList() {
+        return staffMasterClassObservableList;
+    }
+
+    public PanelController setStaffMasterClassObservableList(ObservableList<StaffMasterClass> staffMasterClassObservableList) {
+        this.staffMasterClassObservableList = staffMasterClassObservableList;
+        return this;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public PanelController setFile(File file) {
+        this.file = file;
+        return this;
+    }
+
+    public FileInputStream getFileInputStream() {
+        return fileInputStream;
+    }
+
+    public PanelController setFileInputStream(FileInputStream fileInputStream) {
+        this.fileInputStream = fileInputStream;
+        return this;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public PanelController setLength(int length) {
+        this.length = length;
+        return this;
+    }
 }
