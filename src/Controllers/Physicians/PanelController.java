@@ -1,9 +1,6 @@
 package Controllers.Physicians;
 
-import Controllers.MasterClasses.AppointmentMasterClass;
-import Controllers.MasterClasses.ConditionsMasterClass;
-import Controllers.MasterClasses.LabTestsMasterClass;
-import Controllers.MasterClasses.RecordsMasterClass;
+import Controllers.MasterClasses.*;
 import Controllers.Super;
 import Controllers.settings;
 import javafx.beans.value.ChangeListener;
@@ -85,13 +82,13 @@ public class PanelController extends Super implements Initializable, Physician {
     public DatePicker conditionAddDateDiagnosed;
     //code for history tab
     public Tab viewHistoryTab;
-    public TableView tablehistory;
-    public TableColumn tablehistoryId;
-    public TableColumn tablehistoryDate;
-    public TableColumn tablehistoryDoctor;
-    public TableColumn tablehistoryPrescription;
-    public TableColumn tablehistoryTests;
-    public TableColumn tablehistoryRatings;
+    public TableView<HistoryMasterClass> tablehistory;
+    public TableColumn<HistoryMasterClass, String> tablehistoryId;
+    public TableColumn<HistoryMasterClass, String> tablehistoryDate;
+    public TableColumn<HistoryMasterClass, String> tablehistoryDoctor;
+    public TableColumn<HistoryMasterClass, String> tablehistoryPrescription;
+    public TableColumn<HistoryMasterClass, String> tablehistoryTests;
+    public TableColumn<HistoryMasterClass, String> tablehistoryRatings;
     public Button tablehistoryViewPrescriptionsButton;
     public Button tablehistoryViewLabTestButton;
     public Button tablehistoryViewDiagnosisButton;
@@ -146,6 +143,7 @@ public class PanelController extends Super implements Initializable, Physician {
     public Button testsSendToLab;
     public ImageView resultPreview;
     private ObservableList<RecordsMasterClass> recordsMasterClassObservableList = FXCollections.observableArrayList();
+    private ObservableList<HistoryMasterClass> historyMasterClassObservableList = FXCollections.observableArrayList();
     private ObservableList<ConditionsMasterClass> conditionsMasterClassObservableList = FXCollections.observableArrayList();
     private ObservableList<AppointmentMasterClass> appointmentMasterClassObservableList = FXCollections.observableArrayList();
     private ObservableList<AppointmentMasterClass> appointmentMasterClassObservableList2 = FXCollections.observableArrayList();
@@ -157,7 +155,7 @@ public class PanelController extends Super implements Initializable, Physician {
     public void initialize(URL location, ResourceBundle resources) {
 //        loadSessions();
 //        viewPatientDetails();
-        reloadTables();
+        loadTables();
         tabContainer.getSelectionModel().selectedItemProperty().addListener((obs, ov, nv) -> {
             if ((nv.textProperty().getValue().equals("PATIENT RECORDS") && currentSession.isEmpty()) || nv.textProperty().getValue().equals("CLINIC PANEL") && currentSession.isEmpty()) {
                 tabContainer.getSelectionModel().select(ov);
@@ -222,6 +220,10 @@ public class PanelController extends Super implements Initializable, Physician {
             loadSessions();
         }
 
+    }
+
+    private void loadTables() {
+        reloadTables();
     }
 
 
@@ -297,6 +299,9 @@ public class PanelController extends Super implements Initializable, Physician {
 
 
     private void buttonListeners() {
+
+        tabClinicPrescriptionSubmit.setOnAction(event -> Patientprescription());
+
 //        diagnosis submitted
         tabClinicDiagnosisSubmit.setOnAction(event -> {
             String s = tabClinicDiagnosisInput.getText();
@@ -631,6 +636,34 @@ public class PanelController extends Super implements Initializable, Physician {
     }
     @Override
     public void viewPatientHistory() {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM prescriptions WHERE completed=? AND patientemail=?");
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setString(2, currentSession.get("currentSession"));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    HistoryMasterClass historyMasterClass = new HistoryMasterClass();
+                    historyMasterClass.setId(resultSet.getString("id"));
+                    historyMasterClass.setDate(resultSet.getString("dateprescribed"));
+                    historyMasterClass.setDoctor(resultSet.getString("doctor"));
+                    historyMasterClass.setPrescription(resultSet.getString("prescription"));
+                    historyMasterClass.setTests(resultSet.getString("tests"));
+                    historyMasterClassObservableList.add(historyMasterClass);
+                }
+                tablehistory.setItems(historyMasterClassObservableList);
+
+                tablehistoryId.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("id"));
+                tablehistoryDate.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("date"));
+                tablehistoryDoctor.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("doctor"));
+                tablehistoryPrescription.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("prescription"));
+                tablehistoryTests.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("tests"));
+//                public TableColumn <HistoryMasterClass,String>tablehistoryRatings;
+                tablehistory.refresh();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -832,22 +865,48 @@ public class PanelController extends Super implements Initializable, Physician {
             alert.setHeaderText(null);
             alert.setContentText("Are you sure you want to submit an empty prescription?");
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                prescribe();
-            } else {
+            if (result.isPresent()) {
+                if (result.get() == ButtonType.OK) {
+                    prescribe("NO PRESCRIPTION AVAILABLE");
+                }
                 // ... user chose CANCEL or closed the dialog
+
             }
+        } else {
+            prescribe(prescribe);
         }
     }
 
-    private void prescribe() {
-        String prescribe = tabClinicPrescriptionText.getText();
+    private void prescribe(String prescription) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prescriptions(patientemail, diagnosis, prescription, recommendation, doctor, tests, ratings) VALUES (?,?,?,?,?,?,?)");
-            preparedStatement.setString(1, currentSession.get("currentSession"));
+            PreparedStatement preparedStatementCheck = connection.prepareStatement("SELECT * FROM prescriptions WHERE completed=? AND patientemail=?");
+            preparedStatementCheck.setBoolean(1, false);
+            preparedStatementCheck.setString(2, currentSession.get("currentSession"));
+            ResultSet resultSetCheck = preparedStatementCheck.executeQuery();
+            if (resultSetCheck.isBeforeFirst()) {
+                //the diagnosis exists
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE prescriptions SET prescription=? ,completed=? WHERE patientemail=? AND completed=?");
+                    preparedStatement.setString(1, prescription);
+                    preparedStatement.setBoolean(2, true);
+                    preparedStatement.setString(3, currentSession.get("currentSession"));
+                    preparedStatement.setBoolean(4, false);
+                    if (preparedStatement.executeUpdate() > 0) {
+                        showAlert(Alert.AlertType.INFORMATION, panel.getScene().getWindow(), "SUCCESS", "OPERATION SUCCESSFULL");
+                    } else {
+                        showAlert(Alert.AlertType.ERROR, panel.getScene().getWindow(), "ERROR", "OPERATION WAS NOT COMPLETED SUCCESSFULLY");
+
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                showAlert(Alert.AlertType.WARNING, panel.getScene().getWindow(), "ERROR", "YOU HAVE NOT PROVIDED A DIAGNOSIS FOR THIS PATIENT");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
     }
 
