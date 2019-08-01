@@ -72,6 +72,7 @@ public class PanelController extends Super implements Initializable {
     public Button maternity;
     public Button leave;
     public Button shortBreak;
+    public Button genreport;
     private double tabWidth = 200.0;
     private ArrayList<TabPane> tabPaneArrayList = new ArrayList<>();
     private ObservableList<StaffMasterClass> staffMasterClassObservableList = FXCollections.observableArrayList();
@@ -177,6 +178,8 @@ public class PanelController extends Super implements Initializable {
     }
 
     private void buttonListeners() {
+        ReportsClass reportsClass = new ReportsClass();
+        genreport.setOnAction(event -> reportsClass.diseaseStats());
 
         searchpatientbutton.setOnAction(event -> {
             currentSession.put("currentSession", searchPatientEmail.getText());

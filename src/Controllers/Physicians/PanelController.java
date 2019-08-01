@@ -312,7 +312,7 @@ public class PanelController extends Super implements Initializable, Physician {
 
 //        diagnosis submitted
         tabClinicDiagnosisSubmit.setOnAction(event -> {
-            String s = tabClinicDiagnosisInput.getText();
+            String disease = tabClinicDiagnosisInput.getText().toUpperCase();
             try {
                 String results = "";
                 String id = "";
@@ -328,7 +328,7 @@ public class PanelController extends Super implements Initializable, Physician {
 
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prescriptions(patientemail, diagnosis, doctor, tests) VALUES (?,?,?,?)");
                 preparedStatement.setString(1, currentSession.get("currentSession"));
-                preparedStatement.setString(2, s);
+                preparedStatement.setString(2, disease);
                 preparedStatement.setString(3, user.get("user"));
                 preparedStatement.setString(4, results);
 
@@ -351,6 +351,23 @@ public class PanelController extends Super implements Initializable, Physician {
                     showAlert(Alert.AlertType.ERROR, panel.getScene().getWindow(), "ERROR", "THE OPERATION WAS NOT SUCCESSFULL");
 
 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("select * from disease_database where disease=?");
+                preparedStatement.setString(1, disease);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (!resultSet.isBeforeFirst()) {
+                    PreparedStatement preparedStatement1 = connection.prepareStatement("insert into disease_database(disease) values (?)");
+                    preparedStatement1.setString(1, disease);
+                    int rows = preparedStatement1.executeUpdate();
+                    if (rows > 0) {
+
+                    } else {
+                        System.out.println("FAILURE");
+                    }
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }

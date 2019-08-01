@@ -134,7 +134,8 @@
                                                 prefHeight="49.0" prefWidth="193.0" text="VIEW LAB TESTS"/>
                                         <Button layoutX="829.0" layoutY="194.0" mnemonicParsing="false"
                                                 prefHeight="49.0" prefWidth="193.0" text="VIEW DIAGNOSIS"/>
-                                        <Button layoutX="829.0" layoutY="259.0" mnemonicParsing="false"
+                                        <Button fx:id="genreport" layoutX="829.0" layoutY="259.0"
+                                                mnemonicParsing="false"
                                                 prefHeight="49.0" prefWidth="193.0" text="GET REPORT"/>
                                     </children>
                                 </AnchorPane>
