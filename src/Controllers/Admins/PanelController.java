@@ -1,5 +1,6 @@
 package Controllers.Admins;
 
+import Controllers.MasterClasses.HistoryMasterClass;
 import Controllers.MasterClasses.StaffMasterClass;
 import Controllers.Super;
 import javafx.collections.FXCollections;
@@ -28,6 +29,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,7 +55,7 @@ public class PanelController extends Super implements Initializable {
     public Tab patientinfo;
     public Tab staffinfo;
     public Tab news;
-    public TextField searchPatientID;
+    public TextField searchPatientEmail;
     public Button searchpatientbutton;
     public Label clock;
     public TabPane tabpane;
@@ -76,6 +78,13 @@ public class PanelController extends Super implements Initializable {
     private File file;
     private FileInputStream fileInputStream;
     private int length;
+    private IdentityHashMap<String, String> currentSession = new IdentityHashMap<>();
+    private ObservableList<HistoryMasterClass> historyMasterClassObservableList = FXCollections.observableArrayList();
+    public TableView<HistoryMasterClass> tablehistory;
+    public TableColumn<HistoryMasterClass, String> tablehistoryId;
+    public TableColumn<HistoryMasterClass, String> tablehistoryDate;
+    public TableColumn<HistoryMasterClass, String> tablehistoryDoctor;
+    public TableColumn<HistoryMasterClass, String> tablehistoryPrescription;
 
     //Administrator panel controller
     @Override
@@ -110,7 +119,7 @@ public class PanelController extends Super implements Initializable {
         enterPressed();
         WebEngine engine = webview.getEngine();//help web page
         engine.load(siteHelp);
-        configureView(tabPaneArrayList);
+//        configureView(tabPaneArrayList);
     }
 
 
@@ -168,6 +177,12 @@ public class PanelController extends Super implements Initializable {
     }
 
     private void buttonListeners() {
+
+        searchpatientbutton.setOnAction(event -> {
+            currentSession.put("currentSession", searchPatientEmail.getText());
+            searchPatient();
+        });
+
         addcertfile.setOnMouseClicked(event -> {
 
             FileChooser fileChooser = new FileChooser();
@@ -405,7 +420,36 @@ public class PanelController extends Super implements Initializable {
     }
 
     private void searchPatient() {
+        historyMasterClassObservableList.clear();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM prescriptions WHERE completed=? AND patientemail=?");
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setString(2, currentSession.get("currentSession"));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    HistoryMasterClass historyMasterClass = new HistoryMasterClass();
+                    historyMasterClass.setId(resultSet.getString("id"));
+                    historyMasterClass.setDate(resultSet.getString("dateprescribed"));
+                    historyMasterClass.setDoctor(resultSet.getString("doctor"));
+                    historyMasterClass.setPrescription(resultSet.getString("prescription"));
+                    historyMasterClass.setTests(resultSet.getString("tests"));
+                    historyMasterClassObservableList.add(historyMasterClass);
+                }
+                tablehistory.setItems(historyMasterClassObservableList);
 
+                tablehistoryId.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("id"));
+                tablehistoryDate.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("date"));
+                tablehistoryDoctor.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("doctor"));
+                tablehistoryPrescription.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("prescription"));
+//                tablehistoryTests.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("tests"));
+//                public TableColumn <HistoryMasterClass,String>tablehistoryRatings;
+                tablehistory.refresh();
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 //getters and setters for the class variables
@@ -545,14 +589,6 @@ public class PanelController extends Super implements Initializable {
         return this;
     }
 
-    public TextField getSearchPatientID() {
-        return searchPatientID;
-    }
-
-    public PanelController setSearchPatientID(TextField searchPatientID) {
-        this.searchPatientID = searchPatientID;
-        return this;
-    }
 
     public Button getSearchpatientbutton() {
         return searchpatientbutton;

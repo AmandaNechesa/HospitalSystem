@@ -87,8 +87,8 @@ public class PanelController extends Super implements Initializable, Physician {
     public TableColumn<HistoryMasterClass, String> tablehistoryDate;
     public TableColumn<HistoryMasterClass, String> tablehistoryDoctor;
     public TableColumn<HistoryMasterClass, String> tablehistoryPrescription;
-    public TableColumn<HistoryMasterClass, String> tablehistoryTests;
-    public TableColumn<HistoryMasterClass, String> tablehistoryRatings;
+    //    public TableColumn<HistoryMasterClass, String> tablehistoryTests;
+//    public TableColumn<HistoryMasterClass, String> tablehistoryRatings;
     public Button tablehistoryViewPrescriptionsButton;
     public Button tablehistoryViewLabTestButton;
     public Button tablehistoryViewDiagnosisButton;
@@ -705,7 +705,7 @@ public class PanelController extends Super implements Initializable, Physician {
                 tablehistoryDate.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("date"));
                 tablehistoryDoctor.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("doctor"));
                 tablehistoryPrescription.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("prescription"));
-                tablehistoryTests.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("tests"));
+//                tablehistoryTests.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("tests"));
 //                public TableColumn <HistoryMasterClass,String>tablehistoryRatings;
                 tablehistory.refresh();
 
@@ -1314,23 +1314,6 @@ public class PanelController extends Super implements Initializable, Physician {
         return this;
     }
 
-    public TableColumn<HistoryMasterClass, String> getTablehistoryTests() {
-        return tablehistoryTests;
-    }
-
-    public PanelController setTablehistoryTests(TableColumn<HistoryMasterClass, String> tablehistoryTests) {
-        this.tablehistoryTests = tablehistoryTests;
-        return this;
-    }
-
-    public TableColumn<HistoryMasterClass, String> getTablehistoryRatings() {
-        return tablehistoryRatings;
-    }
-
-    public PanelController setTablehistoryRatings(TableColumn<HistoryMasterClass, String> tablehistoryRatings) {
-        this.tablehistoryRatings = tablehistoryRatings;
-        return this;
-    }
 
     public Button getTablehistoryViewPrescriptionsButton() {
         return tablehistoryViewPrescriptionsButton;

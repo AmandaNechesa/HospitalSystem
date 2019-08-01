@@ -229,14 +229,14 @@
                                                                                              text="DOCTOR"/>
                                                                                 <TableColumn
                                                                                         fx:id="tablehistoryPrescription"
-                                                                                        prefWidth="97.0"
+                                                                                        prefWidth="200.0"
                                                                                         text="PRESCRIPTION"/>
-                                                                                <TableColumn fx:id="tablehistoryTests"
-                                                                                             prefWidth="163.0"
-                                                                                             text="TESTS"/>
-                                                                                <TableColumn fx:id="tablehistoryRatings"
-                                                                                             prefWidth="123.0"
-                                                                                             text="RATINGS"/>
+                                                                                <!--                                                                                <TableColumn fx:id="tablehistoryTests"-->
+                                                                                <!--                                                                                             prefWidth="163.0"-->
+                                                                                <!--                                                                                             text="TESTS"/>-->
+                                                                                <!--                                                                                <TableColumn fx:id="tablehistoryRatings"-->
+                                                                                <!--                                                                                             prefWidth="123.0"-->
+                                                                                <!--                                                                                             text="RATINGS"/>-->
                                                                             </columns>
                                                                         </TableView>
                                                                         <Button fx:id="tablehistoryViewPrescriptionsButton"

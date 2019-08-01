@@ -96,8 +96,8 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="searchPatientID" alignment="CENTER" layoutX="14.0" layoutY="14.0"
-                                           prefHeight="50.0" prefWidth="408.0" promptText="PATIENT ID">
+                                <TextField fx:id="searchPatientEmail" alignment="CENTER" layoutX="14.0" layoutY="14.0"
+                                           prefHeight="50.0" prefWidth="408.0" promptText="PATIENT EMAIL">
                                     <font>
                                         <Font size="20.0"/>
                                     </font>
@@ -112,20 +112,20 @@
                                             style="-fx-background-color: white;" styleClass="innerform">
                                     <children>
                                         <ScrollPane layoutX="22.0" layoutY="23.0" prefHeight="422.0" prefWidth="709.0"/>
-                                        <TableView fx:id="prescriptionsTable" layoutX="22.0" layoutY="24.0"
+                                        <TableView fx:id="tablehistory" layoutX="22.0" layoutY="24.0"
                                                    prefHeight="419.0" prefWidth="709.0">
                                             <columns>
-                                                <TableColumn fx:id="prescriptionsTableId" prefWidth="75.0" text="ID"/>
-                                                <TableColumn fx:id="prescriptionsTableDate" prefWidth="138.0"
+                                                <TableColumn fx:id="tablehistoryId" prefWidth="75.0" text="ID"/>
+                                                <TableColumn fx:id="tablehistoryDate" prefWidth="138.0"
                                                              text="DATE"/>
-                                                <TableColumn fx:id="prescriptionsTableDoctor" prefWidth="110.0"
+                                                <TableColumn fx:id="tablehistoryDoctor" prefWidth="110.0"
                                                              text="DOCTOR"/>
-                                                <TableColumn fx:id="prescriptionsTablePrescription" prefWidth="97.0"
+                                                <TableColumn fx:id="tablehistoryPrescription" prefWidth="200.0"
                                                              text="PRESCRIPTION"/>
-                                                <TableColumn fx:id="prescriptionsTableTests" prefWidth="163.0"
-                                                             text="TESTS"/>
-                                                <TableColumn fx:id="prescriptionsTableRatings" prefWidth="123.0"
-                                                             text="RATINGS"/>
+                                                <!--                                                <TableColumn fx:id="prescriptionsTableTests" prefWidth="163.0"-->
+                                                <!--                                                             text="TESTS"/>-->
+                                                <!--                                                <TableColumn fx:id="prescriptionsTableRatings" prefWidth="123.0"-->
+                                                <!--                                                             text="RATINGS"/>-->
                                             </columns>
                                         </TableView>
                                         <Button layoutX="829.0" layoutY="54.0" mnemonicParsing="false" prefHeight="49.0"
