@@ -164,6 +164,14 @@ public class PanelController extends Super implements Initializable, Physician {
                 reloadTables();
             }
         });
+        viewHistoryTab.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if (viewHistoryTab.isSelected()) {
+                    reloadTables();
+                }
+            }
+        });
 //        todo uncomment to make the tabpanes bigger
 //        tabPaneArrayList.add(tabContainer);
 //        tabPaneArrayList.add(tabcontainerclinicpane);
@@ -675,6 +683,7 @@ public class PanelController extends Super implements Initializable, Physician {
     }
     @Override
     public void viewPatientHistory() {
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM prescriptions WHERE completed=? AND patientemail=?");
             preparedStatement.setBoolean(1, true);
@@ -699,7 +708,7 @@ public class PanelController extends Super implements Initializable, Physician {
                 tablehistoryTests.setCellValueFactory(new PropertyValueFactory<HistoryMasterClass, String>("tests"));
 //                public TableColumn <HistoryMasterClass,String>tablehistoryRatings;
                 tablehistory.refresh();
-                reloadTables();
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1023,6 +1032,7 @@ public class PanelController extends Super implements Initializable, Physician {
         appointmentMasterClassObservableList.clear();
         appointmentMasterClassObservableList2.clear();
         labTestsMasterClassObservableList.clear();
+        historyMasterClassObservableList.clear();
         loadSessions();
         viewPatientAppointments();
         viewPatientDetails();
