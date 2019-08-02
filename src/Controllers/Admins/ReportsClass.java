@@ -49,7 +49,7 @@ public class ReportsClass extends Super {
             e.printStackTrace();
         }
         try {
-            System.out.println(prescriptions.toString() + " is the builder");
+//            System.out.println(prescriptions.toString() + " is the builder");
             PreparedStatement preparedStatement = connection.prepareStatement("select * from disease_database");
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.isBeforeFirst()) {
