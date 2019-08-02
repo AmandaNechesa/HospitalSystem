@@ -5,10 +5,12 @@ import Controllers.MasterClasses.StaffMasterClass;
 import Controllers.Super;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -93,6 +95,7 @@ public class PanelController extends Super implements Initializable {
         init();
         //viewStaffInfo();
         title.setText(appName + " Admin Panel ");
+
     }
 
     private void init() {
@@ -114,6 +117,32 @@ public class PanelController extends Super implements Initializable {
 //            }
 //            changepassword.remove("change");
 //        }
+
+
+        viewStaff.setEditable(true);
+        viewStaffStatus.setCellFactory(TextFieldTableCell.forTableColumn());
+        viewStaffStatus.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<StaffMasterClass, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<StaffMasterClass, String> t) {
+                        ((StaffMasterClass) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setStatus(t.getNewValue());
+                        String newval = t.getNewValue();
+
+                        try {
+                            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users set status=? WHERE id=?");
+                            preparedStatement.setString(1, newval);
+                            preparedStatement.setString(2, ((StaffMasterClass) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).getId());
+                            preparedStatement.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
         tabPaneArrayList.add(tabpane);
         time(clock);
         buttonListeners();
@@ -179,7 +208,12 @@ public class PanelController extends Super implements Initializable {
 
     private void buttonListeners() {
         ReportsClass reportsClass = new ReportsClass();
-        genreport.setOnAction(event -> reportsClass.diseaseStats());
+        genreport.setOnAction(event -> {
+
+            reportsClass.diseaseStats();
+
+            reportsClass.closeDocument();
+        });
 
         searchpatientbutton.setOnAction(event -> {
             currentSession.put("currentSession", searchPatientEmail.getText());
