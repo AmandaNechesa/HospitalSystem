@@ -20,11 +20,11 @@ System.out.println("Logging out!");
             }
         };
 
-        configureTab(searchPatientTab, "FIND PATIENT", "resources/images/22-Cardi-B-Money.png", patientsearchcontainer, getClass().getResource("resources/views/Physicians/searchPatientInfo.fxml"), replaceBackgroundColorHandler);
-        configureTab(addpatienthistoryTab, "ADD PATIENT HISTORY", "resources/images/22-Cardi-B-Money.png", addPatientHistoryContainer, getClass().getResource("resources/views/Physicians/addPatientHistory.fxml"), replaceBackgroundColorHandler);
-        configureTab(labtestsTab, "LAB", "resources/images/22-Cardi-B-Money.png", labtestscontainer, getClass().getResource("resources/views/Physicians/labTests.fxml"), replaceBackgroundColorHandler);
-        configureTab(accountTab, "MY ACCOUNT", "resources/images/22-Cardi-B-Money.png", accountContainer, getClass().getResource("resources/views/Physicians/account.fxml"), replaceBackgroundColorHandler);
-        configureTab(logoutTab, "LOG OUT", "resources/images/22-Cardi-B-Money.png", null, null, logoutHandler);
+        configureTab(searchPatientTab, "FIND PATIENT", "HOSPITAL.resources/images/22-Cardi-B-Money.png", patientsearchcontainer, getClass().getResource("HOSPITAL.resources/views/Physicians/searchPatientInfo.fxml"), replaceBackgroundColorHandler);
+        configureTab(addpatienthistoryTab, "ADD PATIENT HISTORY", "HOSPITAL.resources/images/22-Cardi-B-Money.png", addPatientHistoryContainer, getClass().getResource("HOSPITAL.resources/views/Physicians/addPatientHistory.fxml"), replaceBackgroundColorHandler);
+        configureTab(labtestsTab, "LAB", "HOSPITAL.resources/images/22-Cardi-B-Money.png", labtestscontainer, getClass().getResource("HOSPITAL.resources/views/Physicians/labTests.fxml"), replaceBackgroundColorHandler);
+        configureTab(accountTab, "MY ACCOUNT", "HOSPITAL.resources/images/22-Cardi-B-Money.png", accountContainer, getClass().getResource("HOSPITAL.resources/views/Physicians/account.fxml"), replaceBackgroundColorHandler);
+        configureTab(logoutTab, "LOG OUT", "HOSPITAL.resources/images/22-Cardi-B-Money.png", null, null, logoutHandler);
 
         searchPatientTab.setStyle("-fx-background-color: -fx-focus-color;");
 */

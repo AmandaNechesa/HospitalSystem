@@ -26,7 +26,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static Controllers.settings.*;
+import static HOSPITAL.Controllers.settings.*;
 
 
 public class Main extends Application {
@@ -150,7 +150,7 @@ public class Main extends Application {
 
     private void showMainStage(
     ) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("resources/views/basic/LoginScene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("HOSPITAL/resources/views/basic/LoginScene.fxml"));
         FadeTransition ft = new FadeTransition(Duration.millis(2500), root);
         ft.setFromValue(0.3);
         ft.setToValue(1.0);
